@@ -48,3 +48,16 @@ emotion_model = pipeline("text-classification", model="bhadresh-savani/bert-base
 async def detect_emotion(request: EmotionRequest):
     result = emotion_model(request.text)
     return {"emotion": result[0]['label'], "confidence": result[0]['score']}
+import cv2
+from fer import FER
+from fastapi import UploadFile
+
+# Initialize the FER detector
+detector = FER()
+
+@app.post("/detect_facial_emotion")
+async def detect_facial_emotion(file: UploadFile):
+    img_data = await file.read()  # Read the image file
+    img = cv2.imdecode(np.frombuffer(img_data, np.uint8), cv2.IMREAD_COLOR)  # Convert to image
+    emotion, score = detector.top_emotion(img)  # Detect emotion from the image
+    return {"emotion": emotion, "confidence": score}

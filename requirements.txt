@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+tensorflow  # For AI/ML models
+torch      # If you plan on using Pytorch models
+transformers  # For NLP models
+numpy
+pandas
+scikit-learn
+pydantic  # For request validation in FastAPI
+python-dotenv  # To load environment variables, like for API keys
